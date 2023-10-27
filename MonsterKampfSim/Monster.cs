@@ -1,6 +1,6 @@
 ﻿namespace MonsterKampfSim
 {
-    internal class Monster
+    public abstract class Monster
     {
 
         public enum EMonsterStats
@@ -21,7 +21,7 @@
                     hp = value;
                     HPPrint.Invoke(this);
                 }
-                
+
             }
         }
         protected float ap;
@@ -30,9 +30,8 @@
         public float DP => dp;
         protected float s;
         public float S => s;
-        protected Game.EMonsterRace race;
-        public Game.EMonsterRace Race => race;
 
+        public Game.EMonsterRace MonsterRace;
         protected string monsterName;
         public string MonsterName => monsterName;
         public delegate void DamagePrintHandler(Monster _monster, float _actualDamage);
@@ -40,54 +39,54 @@
         public delegate void HPPrintHandler(Monster _monster);
         public event HPPrintHandler HPPrint;
 
-        public Monster(float _hp, float _ap, float _dp, float _s, Game.EMonsterRace _race)
+        public Monster(float _hp, float _ap, float _dp, float _s)
         {
             hp = _hp;
             ap = _ap;
             dp = _dp;
             s = _s;
-            race = _race;
-            monsterName = _race.ToString();
 
         }
 
 
-        public void Attack(Monster _creatureToHit)
+        public virtual void Attack(Monster _creatureToHit)
         {
             _creatureToHit.TakeDamage(ap);
 
         }
 
-        public void ChangeRace(Game.EMonsterRace _race)
-        {
-            race = _race;
-            monsterName = _race.ToString();
-        }
-
         //TODO: Dictionary<EMonsterStats, float> anlegen
-        public void ChangeStat(EMonsterStats _statToChange, float _value)
+        //public void ChangeStat(EMonsterStats _statToChange, float _value)
+        //{
+        //    switch (_statToChange)
+        //    {
+        //        case EMonsterStats.hp:
+        //            hp = _value;
+        //            break;
+        //        case EMonsterStats.ap:
+        //            ap = _value;
+        //            break;
+        //        case EMonsterStats.dp:
+        //            dp = _value;
+        //            break;
+        //        case EMonsterStats.s:
+        //            s = _value;
+        //            break;
+
+        //    }
+        //}
+
+        public virtual void TakeDamage(float _damageTaken, bool _isCritical = false)
         {
-            switch (_statToChange)
+            float actualDamage;
+            if (_isCritical)
             {
-                case EMonsterStats.hp:
-                    hp = _value;
-                    break;
-                case EMonsterStats.ap:
-                    ap = _value;
-                    break;
-                case EMonsterStats.dp:
-                    dp = _value;
-                    break;
-                case EMonsterStats.s:
-                    s = _value;
-                    break;
-
+                actualDamage = MathF.Max(_damageTaken * 2 - dp, 0);
             }
-        }
-
-        public void TakeDamage(float _damageTaken)
-        {
-            var actualDamage = MathF.Max(_damageTaken - dp, 0);
+            else
+            {
+                actualDamage = MathF.Max(_damageTaken - dp, 0);
+            }
             DamagePrint.Invoke(this, actualDamage);
             HP = MathF.Max(0, HP - actualDamage);
         }

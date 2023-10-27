@@ -1,4 +1,6 @@
-﻿namespace MonsterKampfSim
+﻿using static System.Net.Mime.MediaTypeNames;
+
+namespace MonsterKampfSim
 {
     internal class UI
     {
@@ -41,11 +43,6 @@
             Console.WriteLine("Nun gebe erneut alle Werte ein. Diesesmal für das zweite Monster!");
         }
 
-        public void PrintChooseDifferentRace()
-        {
-            Console.WriteLine("Die Monster dürfen nicht die gleiche Rasse haben! Bitte versuche es erneut!");
-        }
-
         public void PrintEndGame(Monster _winningMonster, int _roundCount)
         {
             //Console.Clear();
@@ -60,12 +57,6 @@
         public void PrintDamage(Monster _monster, float _actualDamage)
         {
             Console.WriteLine($"Der {_monster.MonsterName} hat {_actualDamage} Punkte Schaden bekommen!");
-        }
-
-        public void PrintChangeStat(Monster _monster)
-        {
-            Console.WriteLine("Deine Monster würden sich unendlich lange bekämpfen! Bitte gebe einen neuen Angriffswert ein der höher ist als die Verteidigung des ersten Monsters!");
-            Console.WriteLine($"Das erste Monster hat {_monster.DP} Verteidigung!");
         }
         public void StartGame()
         {
@@ -103,5 +94,42 @@
         //    Console.WriteLine("Bitt achte in Zukunft darauf, keine toten Monster zu erstellen!");
         //    Console.ReadKey();
         //}
+        private void PrintHealSkill()
+        {
+            Console.WriteLine("Troll benutzt Regeneration!");
+        }
+        private void PrintDodgeSkill()
+        {
+            Console.WriteLine("Der Goblin ist ausgewichen!");
+        }
+
+        public void RegisterInput(Input _userInput)
+        {
+            _userInput.printStep1 += PrintInputHP;
+            _userInput.printStep2 += PrintInputAP;
+            _userInput.printStep3 += PrintInputDP;
+            _userInput.printStep4 += PrintInputS;
+            _userInput.printStep5 += PrintInputRace;
+            _userInput.printInputError += PrintErrorMessage;
+            _userInput.printRangeInstruction += PrintRangeInstruction;
+        }
+
+        public void RegisterMonsters(Monster _monster)
+        {
+            _monster.HPPrint += PrintHP;
+            _monster.DamagePrint += PrintDamage;
+            switch (_monster)
+            {
+                case Ork ork:
+                    break;
+                case Troll troll:
+                    troll.activateHealSkill += PrintHealSkill;
+                    break;
+                case Goblin goblin:
+                    goblin.activateDodgeSkill += PrintDodgeSkill;
+                    break;
+            }
+        }
+
     }
 }

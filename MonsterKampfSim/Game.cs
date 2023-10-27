@@ -1,6 +1,6 @@
 ﻿namespace MonsterKampfSim
 {
-    internal class Game
+    public class Game
     {
         private bool debug;
         private bool gameRunning = true;
@@ -11,7 +11,6 @@
         private delegate void EndGamePrintHandler(Monster _winningMonster, int _roundCount);
         private event EndGamePrintHandler endGamePrint;
         private delegate void ChangeStatHandler(Monster _monsterToChangeStatsOn);
-        private event ChangeStatHandler changeMonsterStat;
         private Action startGame;
         private int roundCount;
 
@@ -31,27 +30,15 @@
         {
             userInput = new Input();
             text = new UI();
+            text.RegisterInput(userInput);
             text.PrintInstructions();
-            userInput.printStep1 += text.PrintInputHP;
-            userInput.printStep2 += text.PrintInputAP;
-            userInput.printStep3 += text.PrintInputDP;
-            userInput.printStep4 += text.PrintInputS;
-            userInput.printStep5 += text.PrintInputRace;
-            userInput.printRaceError += text.PrintChooseDifferentRace;
-            userInput.printInputError += text.PrintErrorMessage;
-            userInput.printRangeInstruction += text.PrintRangeInstruction;
-            monster1 = new Monster(userInput.GetMonsterFloatInput(1, 100), userInput.GetMonsterFloatInput(0, 100), userInput.GetMonsterFloatInput(0, 100), userInput.GetMonsterFloatInput(0, 100), userInput.GetMonsterRaceInput(1,3));
+            monster1 = CreateMonster();
+            text.RegisterMonsters(monster1);
             text.PrintNextMonsterText();
-            monster2 = new Monster(userInput.GetMonsterFloatInput(1, 100), userInput.GetMonsterFloatInput(0, 100), userInput.GetMonsterFloatInput(0, 100), userInput.GetMonsterFloatInput(0, 100), userInput.GetMonsterRaceInput(1,3));
-            changeMonsterStat += text.PrintChangeStat;
-            //printHPError += text.PrintHPError;
-            CheckInvalidStats();
-            monster1.HPPrint += text.PrintHP;
-            monster2.HPPrint += text.PrintHP;
-            monster1.DamagePrint += text.PrintDamage;
-            monster2.DamagePrint += text.PrintDamage;
-            endGamePrint += text.PrintEndGame;
+            monster2 = CreateMonster();
+            text.RegisterMonsters(monster2);
             startGame += text.StartGame;
+            endGamePrint += text.PrintEndGame;
             if (monster1.S >= monster2.S)
             {
                 GameUpdate(monster1, monster2);
@@ -62,6 +49,7 @@
             }
         }
 
+        //TODO: Max round count
         private void GameUpdate(Monster _firstMonster, Monster _secondMonster)
         {
             startGame.Invoke();
@@ -94,37 +82,26 @@
                 endGamePrint.Invoke(_firstMonster, roundCount);
             }
         }
-
-        private void CheckInvalidStats()
+        private Monster CreateMonster()
         {
-            bool invalidStats = true;
-            while (invalidStats)
+            int raceInput;
+            do
             {
-                if (monster1.Race == monster2.Race)
-                {
-                    var changedMonsterRace = userInput.ChooseDifferentRace(monster2.Race);
-                    monster2.ChangeRace(changedMonsterRace);
+                raceInput = userInput.GetMonsterRaceInput(1, 3);
 
-                }
-                else if (monster1.Ap <= monster2.DP && monster2.Ap <= monster1.DP)
-                {
-                    changeMonsterStat.Invoke(monster1);
-                    var changedMonsterStat = userInput.GetAnyFloatInput(0,100);
-                    monster2.ChangeStat(Monster.EMonsterStats.ap, changedMonsterStat);
-
-                }
-                //else if (monster1.HP <= 0 || monster2.HP <= 0)
-                //{
-                //    printHPError.Invoke();
-                //    monster1.ChangeStat(Monster.EMonsterStats.hp, MathF.Max(1, monster1.HP));
-                //    monster2.ChangeStat(Monster.EMonsterStats.hp, MathF.Max(1, monster2.HP));
-                //}
-                else
-                {
-                    invalidStats = false;
-                }
+            } while (monster1 != null && (EMonsterRace)raceInput == monster1.MonsterRace);
+            switch ((EMonsterRace)raceInput)
+            {
+                case EMonsterRace.Ork:
+                    return new Ork(userInput.GetMonsterFloatInput(1, 100), userInput.GetMonsterFloatInput(0, 100), userInput.GetMonsterFloatInput(0, 100), userInput.GetMonsterFloatInput(0, 100));
+                case EMonsterRace.Troll:
+                    return new Troll(userInput.GetMonsterFloatInput(1, 100), userInput.GetMonsterFloatInput(0, 100), userInput.GetMonsterFloatInput(0, 100), userInput.GetMonsterFloatInput(0, 100));
+                case EMonsterRace.Goblin:
+                    return new Goblin(userInput.GetMonsterFloatInput(1, 100), userInput.GetMonsterFloatInput(0, 100), userInput.GetMonsterFloatInput(0, 100), userInput.GetMonsterFloatInput(0, 100));
+                default:
+                    throw new ArgumentOutOfRangeException();
             }
         }
-
     }
+
 }
