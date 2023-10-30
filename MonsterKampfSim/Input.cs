@@ -48,25 +48,16 @@
                 }
             }
         }
-        public Game.EMonsterRace GetMonsterRaceInput(float _min, float _max)
+        public int GetMonsterRaceInput(float _min, float _max)
         {
             while (true)
             {
                 printStep5.Invoke();
                 var userInput = Console.ReadLine();
-                if (int.TryParse(userInput, out var intInput) && intInput >= _min &&  intInput <= _max)
+                if (int.TryParse(userInput, out var intInput) && intInput >= _min && intInput <= _max)
                 {
                     Console.Clear();
-                    switch (intInput)
-                    {
-                        case 1:
-                            return Game.EMonsterRace.Ork;
-                        case 2:
-                            return Game.EMonsterRace.Troll;
-                        case 3:
-                            return Game.EMonsterRace.Goblin;
-                    }
-
+                    return intInput;
                 }
                 else
                 {
