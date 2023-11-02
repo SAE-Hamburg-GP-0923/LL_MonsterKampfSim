@@ -17,7 +17,7 @@
         public override void TakeDamage(float _damageTaken, bool _isCritical = false)
         {
             base.TakeDamage(_damageTaken);
-            if (HP > 0)
+            if (HP > 0 && HP < maxHP)
             {
                 activateHealSkill.Invoke();
                 SelfHeal();

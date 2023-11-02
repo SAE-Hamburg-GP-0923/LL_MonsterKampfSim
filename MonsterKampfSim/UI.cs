@@ -131,5 +131,11 @@ namespace MonsterKampfSim
             }
         }
 
+        internal void PrintEndGameDraw()
+        {
+            Console.Clear();
+            Console.WriteLine("Der Kampf hat in einem Unentschieden geendet, da die maximal Anzahl an Runden erreicht wurde!");
+            Console.ReadKey();
+        }
     }
 }

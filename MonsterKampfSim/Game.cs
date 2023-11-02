@@ -12,7 +12,9 @@
         private event EndGamePrintHandler endGamePrint;
         private delegate void ChangeStatHandler(Monster _monsterToChangeStatsOn);
         private Action startGame;
+        private Action endGameDraw;
         private int roundCount;
+        private int maxRoundCount;
 
         public enum EMonsterRace
         {
@@ -21,9 +23,10 @@
             Goblin = 3,
         }
 
-        public Game(bool _debug)
+        public Game(bool _debug, int _maxRoundCount)
         {
             debug = _debug;
+            maxRoundCount = _maxRoundCount;
         }
 
         public void GameInit()
@@ -39,6 +42,7 @@
             text.RegisterMonsters(monster2);
             startGame += text.StartGame;
             endGamePrint += text.PrintEndGame;
+            endGameDraw += text.PrintEndGameDraw;
             if (monster1.S >= monster2.S)
             {
                 GameUpdate(monster1, monster2);
@@ -53,7 +57,7 @@
         private void GameUpdate(Monster _firstMonster, Monster _secondMonster)
         {
             startGame.Invoke();
-            while (gameRunning)
+            while (gameRunning && roundCount < maxRoundCount)
             {
                 if (_firstMonster.HP > 0 && _secondMonster.HP > 0)
                 {
@@ -67,6 +71,7 @@
                     Console.Clear();
                 }
             }
+            endGameDraw.Invoke();
         }
 
         private void CheckVictoryCondition(Monster _firstMonster, Monster _secondMonster)
