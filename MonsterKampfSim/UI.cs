@@ -45,7 +45,6 @@ namespace MonsterKampfSim
 
         public void PrintEndGame(Monster _winningMonster, int _roundCount)
         {
-            //Console.Clear();
             Console.WriteLine($"Der {_winningMonster.MonsterName} hat nach {_roundCount} Runden gewonnen!");
         }
 
@@ -85,15 +84,6 @@ namespace MonsterKampfSim
         {
             Console.WriteLine($"Der Wert muss zwischen {_min} und {_max} liegen!");
         }
-
-        //public void PrintHPError()
-        //{
-        //    Console.WriteLine("Oh! Du hast einem oder beiden Monstern 0 Lebenspunkte gegeben!");
-        //    Console.WriteLine("Ein Monster ohne Lebenspunkte ist ein totes Monster.");
-        //    Console.WriteLine("Wir haben den Wert des/der betroffenen Monster/s auf 1 gesetzt!");
-        //    Console.WriteLine("Bitt achte in Zukunft darauf, keine toten Monster zu erstellen!");
-        //    Console.ReadKey();
-        //}
         private void PrintHealSkill()
         {
             Console.WriteLine("Troll benutzt Regeneration!");
@@ -105,13 +95,13 @@ namespace MonsterKampfSim
 
         public void RegisterInput(Input _userInput)
         {
-            _userInput.printStep1 += PrintInputHP;
-            _userInput.printStep2 += PrintInputAP;
-            _userInput.printStep3 += PrintInputDP;
-            _userInput.printStep4 += PrintInputS;
-            _userInput.printStep5 += PrintInputRace;
-            _userInput.printInputError += PrintErrorMessage;
-            _userInput.printRangeInstruction += PrintRangeInstruction;
+            _userInput.PrintStep1 += PrintInputHP;
+            _userInput.PrintStep2 += PrintInputAP;
+            _userInput.PrintStep3 += PrintInputDP;
+            _userInput.PrintStep4 += PrintInputS;
+            _userInput.PrintStep5 += PrintInputRace;
+            _userInput.PrintInputError += PrintErrorMessage;
+            _userInput.PrintRangeInstruction += PrintRangeInstruction;
         }
 
         public void RegisterMonsters(Monster _monster)
@@ -123,10 +113,10 @@ namespace MonsterKampfSim
                 case Ork ork:
                     break;
                 case Troll troll:
-                    troll.activateHealSkill += PrintHealSkill;
+                    troll.ActivateHealSkill += PrintHealSkill;
                     break;
                 case Goblin goblin:
-                    goblin.activateDodgeSkill += PrintDodgeSkill;
+                    goblin.ActivateDodgeSkill += PrintDodgeSkill;
                     break;
             }
         }

@@ -53,7 +53,6 @@
             }
         }
 
-        //TODO: Max round count
         private void GameUpdate(Monster _firstMonster, Monster _secondMonster)
         {
             startGame.Invoke();

@@ -31,7 +31,8 @@
         protected float s;
         public float S => s;
 
-        public Game.EMonsterRace MonsterRace;
+        protected Game.EMonsterRace monsterRace;
+        public Game.EMonsterRace MonsterRace => monsterRace;
         protected string monsterName;
         public string MonsterName => monsterName;
         public delegate void DamagePrintHandler(Monster _monster, float _actualDamage);
@@ -54,27 +55,6 @@
             _creatureToHit.TakeDamage(ap);
 
         }
-
-        //TODO: Dictionary<EMonsterStats, float> anlegen
-        //public void ChangeStat(EMonsterStats _statToChange, float _value)
-        //{
-        //    switch (_statToChange)
-        //    {
-        //        case EMonsterStats.hp:
-        //            hp = _value;
-        //            break;
-        //        case EMonsterStats.ap:
-        //            ap = _value;
-        //            break;
-        //        case EMonsterStats.dp:
-        //            dp = _value;
-        //            break;
-        //        case EMonsterStats.s:
-        //            s = _value;
-        //            break;
-
-        //    }
-        //}
 
         public virtual void TakeDamage(float _damageTaken, bool _isCritical = false)
         {

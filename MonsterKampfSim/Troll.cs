@@ -3,11 +3,11 @@
     internal class Troll : Monster
     {
         private float maxHP;
-        public Action activateHealSkill;
+        public Action ActivateHealSkill;
         public Troll(float _hp, float _ap, float _dp, float _s) : base(_hp, _ap, _dp, _s)
         {
             monsterName = "Troll";
-            MonsterRace = Game.EMonsterRace.Troll;
+            monsterRace = Game.EMonsterRace.Troll;
             maxHP = _hp;
         }
         public override void Attack(Monster _creatureToHit)
@@ -19,7 +19,7 @@
             base.TakeDamage(_damageTaken);
             if (HP > 0 && HP < maxHP)
             {
-                activateHealSkill.Invoke();
+                ActivateHealSkill.Invoke();
                 SelfHeal();
             }
         }
