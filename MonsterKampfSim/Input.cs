@@ -2,6 +2,7 @@
 {
     internal class Input
     {
+        #region actions and help variables
         public Action<float, float> PrintInputError;
         public Action<float, float> PrintRangeInstruction;
         public Action PrintRaceError;
@@ -11,10 +12,14 @@
         public Action PrintStep4;
         public Action PrintStep5;
         private int stepID = 1;
+        #endregion
+
+        //Func to gain float input for monster stats
         public float GetMonsterFloatInput(float _min, float _max)
         {
             while (true)
             {
+                //switch is used to print correct UI text for each stat
                 switch (stepID)
                 {
                     case 1:
@@ -67,6 +72,11 @@
             }
         }
 
+        /// <summary>
+        /// Func to change the race of the given monster
+        /// </summary>
+        /// <param name="_race"></param>
+        /// <returns></returns>
         public Game.EMonsterRace ChooseDifferentRace(Game.EMonsterRace _race)
         {
             while (true)

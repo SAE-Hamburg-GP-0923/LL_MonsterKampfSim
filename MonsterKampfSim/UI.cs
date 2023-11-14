@@ -4,13 +4,11 @@ namespace MonsterKampfSim
 {
     internal class UI
     {
-        public void PrintErrorMessage(float _min, float _max)
+        #region Input prints
+        public void PrintRangeInstruction(float _min, float _max)
         {
-            Console.Clear();
-            Console.WriteLine("Bitte gebe einen vernünftigen Wert ein!");
-            Console.WriteLine($"Alle Werte dürfen nur zwischen {_min} und {_max} liegen!");
+            Console.WriteLine($"Der Wert muss zwischen {_min} und {_max} liegen!");
         }
-
         public void PrintInputHP()
         {
             Console.WriteLine("Bitte gebe zuerst die HP des Monsters ein!");
@@ -37,34 +35,9 @@ namespace MonsterKampfSim
             Console.WriteLine("[2] = Troll");
             Console.WriteLine("[3] = Goblin");
         }
+        #endregion
 
-        public void PrintNextMonsterText()
-        {
-            Console.WriteLine("Nun gebe erneut alle Werte ein. Diesesmal für das zweite Monster!");
-        }
-
-        public void PrintEndGame(Monster _winningMonster, int _roundCount)
-        {
-            Console.WriteLine($"Der {_winningMonster.MonsterName} hat nach {_roundCount} Runden gewonnen!");
-        }
-
-        public void PrintHP(Monster _monster)
-        {
-            Console.WriteLine($"{_monster.MonsterName} hat noch {_monster.HP} Leben!");
-        }
-
-        public void PrintDamage(Monster _monster, float _actualDamage)
-        {
-            Console.WriteLine($"Der {_monster.MonsterName} hat {_actualDamage} Punkte Schaden bekommen!");
-        }
-        public void StartGame()
-        {
-            Console.Clear();
-            Console.WriteLine("Alle Werte sind in Ordnung! Drücke eine beliebige Taste zum beginnen der Simulation!");
-            Console.WriteLine("Die Simulation basiert auf Runden! Um die nächste Runde auszuführen drücke eine beliebige Taste nachdem die aktuellen Lebenswerte erschienen sind!");
-            Console.ReadKey();
-            Console.Clear();
-        }
+        #region Game logic prints
         public void PrintInstructions()
         {
             Console.WriteLine("Willkommen bei dieser kleinen Monster Kampf Simulation!");
@@ -79,10 +52,38 @@ namespace MonsterKampfSim
             Console.Clear();
 
         }
-
-        public void PrintRangeInstruction(float _min, float _max)
+        public void StartGame()
         {
-            Console.WriteLine($"Der Wert muss zwischen {_min} und {_max} liegen!");
+            Console.Clear();
+            Console.WriteLine("Alle Werte sind in Ordnung! Drücke eine beliebige Taste zum beginnen der Simulation!");
+            Console.WriteLine("Die Simulation basiert auf Runden! Um die nächste Runde auszuführen drücke eine beliebige Taste nachdem die aktuellen Lebenswerte erschienen sind!");
+            Console.ReadKey();
+            Console.Clear();
+        }
+        public void PrintEndGame(Monster _winningMonster, int _roundCount)
+        {
+            Console.WriteLine($"Der {_winningMonster.MonsterName} hat nach {_roundCount} Runden gewonnen!");
+        }
+        public void PrintEndGameDraw()
+        {
+            Console.Clear();
+            Console.WriteLine("Der Kampf hat in einem Unentschieden geendet, da die maximal Anzahl an Runden erreicht wurde!");
+            Console.ReadKey();
+        }
+        public void PrintNextMonsterText()
+        {
+            Console.WriteLine("Nun gebe erneut alle Werte ein. Diesesmal für das zweite Monster!");
+        }
+
+
+        public void PrintHP(Monster _monster)
+        {
+            Console.WriteLine($"{_monster.MonsterName} hat noch {_monster.HP} Leben!");
+        }
+
+        public void PrintDamage(Monster _monster, float _actualDamage)
+        {
+            Console.WriteLine($"Der {_monster.MonsterName} hat {_actualDamage} Punkte Schaden bekommen!");
         }
         private void PrintHealSkill()
         {
@@ -92,7 +93,16 @@ namespace MonsterKampfSim
         {
             Console.WriteLine("Der Goblin ist ausgewichen!");
         }
+        public void PrintErrorMessage(float _min, float _max)
+        {
+            Console.Clear();
+            Console.WriteLine("Bitte gebe einen vernünftigen Wert ein!");
+            Console.WriteLine($"Alle Werte dürfen nur zwischen {_min} und {_max} liegen!");
+        }
+        #endregion
 
+        #region Registrations
+        // Two registry functions to combine link events to UI
         public void RegisterInput(Input _userInput)
         {
             _userInput.PrintStep1 += PrintInputHP;
@@ -121,11 +131,7 @@ namespace MonsterKampfSim
             }
         }
 
-        internal void PrintEndGameDraw()
-        {
-            Console.Clear();
-            Console.WriteLine("Der Kampf hat in einem Unentschieden geendet, da die maximal Anzahl an Runden erreicht wurde!");
-            Console.ReadKey();
-        }
+        #endregion
+
     }
 }

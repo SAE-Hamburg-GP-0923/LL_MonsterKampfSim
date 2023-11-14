@@ -2,7 +2,7 @@
 {
     public abstract class Monster
     {
-
+        #region variables & events
         public enum EMonsterStats
         {
             hp = 1,
@@ -39,6 +39,7 @@
         public event DamagePrintHandler DamagePrint;
         public delegate void HPPrintHandler(Monster _monster);
         public event HPPrintHandler HPPrint;
+        #endregion
 
         public Monster(float _hp, float _ap, float _dp, float _s)
         {
@@ -49,7 +50,7 @@
 
         }
 
-
+        #region generic monster functions to be overridden or used
         public virtual void Attack(Monster _creatureToHit)
         {
             _creatureToHit.TakeDamage(ap);
@@ -70,5 +71,6 @@
             DamagePrint.Invoke(this, actualDamage);
             HP = MathF.Max(0, HP - actualDamage);
         }
+        #endregion
     }
 }

@@ -2,6 +2,7 @@
 {
     public class Game
     {
+        #region Private variables
         private bool debug;
         private bool gameRunning = true;
         private Monster monster1;
@@ -15,7 +16,9 @@
         private Action endGameDraw;
         private int roundCount;
         private int maxRoundCount;
+        #endregion
 
+        // Enum to make monster race readable
         public enum EMonsterRace
         {
             Ork = 1,
@@ -29,6 +32,7 @@
             maxRoundCount = _maxRoundCount;
         }
 
+        // Start game function
         public void GameInit()
         {
             userInput = new Input();
@@ -53,6 +57,7 @@
             }
         }
 
+        // Fight logic
         private void GameUpdate(Monster _firstMonster, Monster _secondMonster)
         {
             startGame.Invoke();
