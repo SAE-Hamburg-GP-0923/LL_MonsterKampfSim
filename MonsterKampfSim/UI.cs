@@ -4,6 +4,7 @@ namespace MonsterKampfSim
 {
     internal class UI
     {
+        private ConsoleColor errorColor = ConsoleColor.Red;
         #region Input prints
         public void PrintRangeInstruction(float _min, float _max)
         {
@@ -96,8 +97,7 @@ namespace MonsterKampfSim
         public void PrintErrorMessage(float _min, float _max)
         {
             Console.Clear();
-            Console.WriteLine("Bitte gebe einen vernünftigen Wert ein!");
-            Console.WriteLine($"Alle Werte dürfen nur zwischen {_min} und {_max} liegen!");
+            ConsoleWriteColorLine("Bitte gebe einen vernünftigen Wert ein!",errorColor);
         }
         #endregion
 
@@ -131,6 +131,21 @@ namespace MonsterKampfSim
             }
         }
 
+        #endregion
+
+        #region HelperFunc
+        public static void ConsoleWriteColor(string _output, ConsoleColor _color)
+        {
+            ConsoleColor currentColor = Console.ForegroundColor;
+            Console.ForegroundColor = _color;
+            Console.Write(_output);
+            Console.ForegroundColor = currentColor;
+        }
+
+        public static void ConsoleWriteColorLine(string _output, ConsoleColor _color)
+        {
+            ConsoleWriteColor(_output + "\n", _color);
+        }
         #endregion
 
     }

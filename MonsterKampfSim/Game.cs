@@ -75,7 +75,7 @@
                     Console.Clear();
                 }
             }
-            endGameDraw.Invoke();
+            if(roundCount >= maxRoundCount) endGameDraw.Invoke();
         }
 
         private void CheckVictoryCondition(Monster _firstMonster, Monster _secondMonster)
