@@ -13,11 +13,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Student\\Desktop\\LL_0923_TempProject\\MonsterKampfSim\\MonsterKampfSim\\MonsterKampfSim.csproj",
+      "projectUniqueName": "\\\\10.4.33.2\\GAME_Studentdata\\LL_0923_TempProject\\MonsterKampfSim\\MonsterKampfSim\\MonsterKampfSim.csproj",
       "projectName": "MonsterKampfSim",
-      "projectPath": "C:\\Users\\Student\\Desktop\\LL_0923_TempProject\\MonsterKampfSim\\MonsterKampfSim\\MonsterKampfSim.csproj",
+      "projectPath": "\\\\10.4.33.2\\GAME_Studentdata\\LL_0923_TempProject\\MonsterKampfSim\\MonsterKampfSim\\MonsterKampfSim.csproj",
       "packagesPath": "C:\\Users\\Student\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Student\\Desktop\\LL_0923_TempProject\\MonsterKampfSim\\MonsterKampfSim\\obj\\",
+      "outputPath": "\\\\10.4.33.2\\GAME_Studentdata\\LL_0923_TempProject\\MonsterKampfSim\\MonsterKampfSim\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\Student\\AppData\\Roaming\\NuGet\\NuGet.Config",

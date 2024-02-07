@@ -2,7 +2,7 @@
 {
     public abstract class Monster
     {
-
+        #region variables & events
         public enum EMonsterStats
         {
             hp = 1,
@@ -31,13 +31,15 @@
         protected float s;
         public float S => s;
 
-        public Game.EMonsterRace MonsterRace;
+        protected Game.EMonsterRace monsterRace;
+        public Game.EMonsterRace MonsterRace => monsterRace;
         protected string monsterName;
         public string MonsterName => monsterName;
         public delegate void DamagePrintHandler(Monster _monster, float _actualDamage);
         public event DamagePrintHandler DamagePrint;
         public delegate void HPPrintHandler(Monster _monster);
         public event HPPrintHandler HPPrint;
+        #endregion
 
         public Monster(float _hp, float _ap, float _dp, float _s)
         {
@@ -48,33 +50,12 @@
 
         }
 
-
+        #region generic monster functions to be overridden or used
         public virtual void Attack(Monster _creatureToHit)
         {
             _creatureToHit.TakeDamage(ap);
 
         }
-
-        //TODO: Dictionary<EMonsterStats, float> anlegen
-        //public void ChangeStat(EMonsterStats _statToChange, float _value)
-        //{
-        //    switch (_statToChange)
-        //    {
-        //        case EMonsterStats.hp:
-        //            hp = _value;
-        //            break;
-        //        case EMonsterStats.ap:
-        //            ap = _value;
-        //            break;
-        //        case EMonsterStats.dp:
-        //            dp = _value;
-        //            break;
-        //        case EMonsterStats.s:
-        //            s = _value;
-        //            break;
-
-        //    }
-        //}
 
         public virtual void TakeDamage(float _damageTaken, bool _isCritical = false)
         {
@@ -90,5 +71,6 @@
             DamagePrint.Invoke(this, actualDamage);
             HP = MathF.Max(0, HP - actualDamage);
         }
+        #endregion
     }
 }

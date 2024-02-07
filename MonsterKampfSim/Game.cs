@@ -2,6 +2,7 @@
 {
     public class Game
     {
+        #region Private variables
         private bool debug;
         private bool gameRunning = true;
         private Monster monster1;
@@ -12,8 +13,12 @@
         private event EndGamePrintHandler endGamePrint;
         private delegate void ChangeStatHandler(Monster _monsterToChangeStatsOn);
         private Action startGame;
+        private Action endGameDraw;
         private int roundCount;
+        private int maxRoundCount;
+        #endregion
 
+        // Enum to make monster race readable
         public enum EMonsterRace
         {
             Ork = 1,
@@ -21,11 +26,13 @@
             Goblin = 3,
         }
 
-        public Game(bool _debug)
+        public Game(bool _debug, int _maxRoundCount)
         {
             debug = _debug;
+            maxRoundCount = _maxRoundCount;
         }
 
+        // Start game function
         public void GameInit()
         {
             userInput = new Input();
@@ -39,6 +46,7 @@
             text.RegisterMonsters(monster2);
             startGame += text.StartGame;
             endGamePrint += text.PrintEndGame;
+            endGameDraw += text.PrintEndGameDraw;
             if (monster1.S >= monster2.S)
             {
                 GameUpdate(monster1, monster2);
@@ -49,11 +57,11 @@
             }
         }
 
-        //TODO: Max round count
+        // Fight logic
         private void GameUpdate(Monster _firstMonster, Monster _secondMonster)
         {
             startGame.Invoke();
-            while (gameRunning)
+            while (gameRunning && roundCount < maxRoundCount)
             {
                 if (_firstMonster.HP > 0 && _secondMonster.HP > 0)
                 {
@@ -67,6 +75,7 @@
                     Console.Clear();
                 }
             }
+            if(roundCount >= maxRoundCount) endGameDraw.Invoke();
         }
 
         private void CheckVictoryCondition(Monster _firstMonster, Monster _secondMonster)
